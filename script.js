@@ -1,15 +1,62 @@
 /* Генерация предсказания должна происходить при клике на кнопку «предсказать судьбу» */
 
-/* Заранее заготовь 3-5 предсказаний и в зависимости от того, как лягут карты судьбы (или что скажет Math.random) показывай их пользователю */
+let firstForecast = "Тебе подарят квартиру в Москве!";
+let secondForecast = "Тебя ждет повышение на работе!";
+let thirdForecast = "В следующем году ты выйдешь замуж!";
+let fourthForecast = "Ты наконец-то сможешь осуществить свою мечту!";
+let fifthForecast = "На тебя накакает голубь!";
 
-/* Подставляй текст нового предсказания в .current-forecast h1 */
+const forecastButton = document.querySelector(".forecast-btn");
+const currentForecast = document.querySelector(".current-forecast");
+let forecastText = currentForecast.querySelector("h1");
+let forecastRate = currentForecast.querySelector("p");
+const forecasts = document.querySelector(".forecasts");
 
-/* Показывай процент вероятности, с которым предсказание сбудется — в верстке это .current-forecast p */
 
-/* Данный процент также нужно генерировать автоматически, он может принимать значения от 0 до 100% */
 
-/* Совет: заведи функцию-хелпер, которая будет заниматься только генерацией данных в диапазоне от min до max и используй ее где нужно */
 
-/* При генерации нового предсказания старое предсказание должно добавляться в начало списка «Мои предсказания» — .forecasts  */
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min) + min) 
+}
 
-/* Для добавления предсказания в список воспользуйся шаблоном forecast-item */
+forecastButton.addEventListener("click", function() {
+    if(forecastText.textContent != "") {
+        const template = document.querySelector("#forecast-item");
+        const forecastItem = template.content.cloneNode(true);
+        const oldForecast = forecastItem.querySelector("h3");
+        oldForecast.textContent = forecastText.textContent;
+        const oldRate = forecastItem.querySelector("p");
+        oldRate.textContent = forecastRate.textContent;
+        forecasts.prepend(forecastItem);
+    }
+
+    let randomForecast = getRandomNumber(1, 6);
+
+    switch(randomForecast) {
+        case 1:
+            forecastText.textContent = firstForecast
+            break;
+        case 2:
+            forecastText.textContent = secondForecast
+            break;
+        case 3:
+            forecastText.textContent = thirdForecast
+            break;
+        case 4:
+            forecastText.textContent = fourthForecast
+            break;
+        default:
+            forecastText.textContent = fifthForecast
+            break;
+    }
+
+    forecastRate.textContent = `${getRandomNumber(0, 100)}%`;
+})
+
+
+
+
+
+
+
+
